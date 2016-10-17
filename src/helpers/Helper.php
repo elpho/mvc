@@ -4,8 +4,8 @@
   use elpho\mvc\View;
 
   abstract class Helper{
-    protected $view;
+    protected static $view;
     public function __construct(View $view){
-      $this->view = $view;
+      self::$view = $view;
     }
   }

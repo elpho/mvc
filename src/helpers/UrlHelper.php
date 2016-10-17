@@ -11,8 +11,9 @@
     public static function file($path){
       if(!file_exists($path))
         throw new \Exception(String::format(
-          "File \"%s\" could not be found for linking in view.",
-          $path
+          "File \"%s\" could not be found for linking in view \"%s\".",
+          $path,
+          self::$view->getFile()
           ));
       return Router::fileRoute($path);
     }
@@ -20,9 +21,10 @@
       $path = Router::routeByAction($callback, $args, $method);
       if($path == null)
         throw new \Exception(String::format(
-          "No action \"%s::%s\" could be found matching the arguments and its types for linking in view.\nArgument %s",
+          "No action \"%s::%s\" could be found matching the arguments and its types for linking in view \"%s\".\nArgument %s",
           $callback[0],
           $callback[1],
+          self::$view->getFile(),
           print_r($args,true)
           ));
 
