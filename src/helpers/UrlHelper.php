@@ -1,6 +1,7 @@
 <?php
   namespace elpho\mvc\helpers;
 
+  use elpho\lang\String;
   use elpho\mvc\Router;
 
   class UrlHelper extends Helper{
