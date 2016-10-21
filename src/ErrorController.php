@@ -2,9 +2,9 @@
   namespace elpho\mvc;
 
   class ErrorController extends Controller{
-    private static $default401 = "mvc/error/default401.html.php";
-    private static $default404 = "mvc/error/default404.html.php";
-    private static $default500 = "mvc/error/default500.html.php";
+    private static $default401 = "vendor/elpho/mvc/src/error/default401.html.php";
+    private static $default404 = "vendor/elpho/mvc/src/error/default404.html.php";
+    private static $default500 = "vendor/elpho/mvc/src/error/default500.html.php";
 
     public static $e500view = "";
     public static $e404view = "";
