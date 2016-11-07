@@ -1,8 +1,8 @@
 <?php
   namespace elpho\mvc;
 
-  use elpho\lang\String;
-  use elpho\lang\Object;
+  use elpho\lang\Text;
+  use elpho\lang\ProtoObject;
   use elpho\lang\ArrayList;
   use elpho\di\DependencyInjector;
 
@@ -29,9 +29,9 @@
     }
 
     public static function fileRoute($uri){
-      $uri = new String($uri);
+      $uri = new Text($uri);
       if(!$uri->startsWith("/"))
-        $uri = new String("/".$uri);
+        $uri = new Text("/".$uri);
 
       $router = self::getInstance();
 
@@ -52,17 +52,17 @@
 
         $uri = $uri->getPath();
       } else {
-        $uri = new String($uri);
+        $uri = new Text($uri);
         if(!$uri->startsWith("/"))
-          $uri = new String("/".$uri);
+          $uri = new Text("/".$uri);
       }
 
       return self::$root.$uri;
     }
 
     private function __construct($index, $default){
-      $index = new String($index);
-      $docRoot = new String($_SERVER["DOCUMENT_ROOT"]);
+      $index = new Text($index);
+      $docRoot = new Text($_SERVER["DOCUMENT_ROOT"]);
 
       $this->routes["get"] = array();
 
@@ -85,12 +85,12 @@
         if($args->length() === 0)
           continue;
 
-        $defaults = new Object();
+        $defaults = new ProtoObject();
         $defaults->path = '';
         $defaults->method = 'get';
 
         foreach($args as $route){
-          $routeArgs = Object::merge($defaults, $route);
+          $routeArgs = ProtoObject::merge($defaults, $route);
 
           $sets[] = array(
             $routeArgs->path,
@@ -125,7 +125,7 @@
       }
 
       if(is_string($url))
-        $url = new String($url);
+        $url = new Text($url);
 
       $parts = $url->replace("\\", "/")->split("/");
       $parts = $parts->filter();
@@ -141,7 +141,7 @@
     }
     public function mapResource($baseUrl, $controller){
       if(!is_object($baseUrl))
-        $baseUrl = new String($baseUrl);
+        $baseUrl = new Text($baseUrl);
 
       $parts = $baseUrl->replace("\\", "/")->split("/");
       $parts = $parts->filter();
@@ -158,9 +158,9 @@
     }
 
     public function getRequest(){
-      $requestUri = new String();
+      $requestUri = new Text();
       if (isset($_SERVER["REQUEST_URI"]))
-        $requestUri = new String($_SERVER["REQUEST_URI"]);
+        $requestUri = new Text($_SERVER["REQUEST_URI"]);
 
       if ($requestUri->startsWith(self::$root))
         $requestUri = $requestUri->substr(strlen(self::$root));

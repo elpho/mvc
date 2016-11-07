@@ -1,8 +1,8 @@
 <?php
   namespace elpho\mvc;
 
-  use elpho\lang\String;
-  use elpho\lang\Object;
+  use elpho\lang\Text;
+  use elpho\lang\ProtoObject;
   use elpho\lang\ArrayList;
   use elpho\lang\ArrayList_from;
   use elpho\di\DependencyInjector;
@@ -23,7 +23,7 @@
         $path = new ArrayList_from($path);
 
       if(!is_object($path)){
-        $path = new String($path);
+        $path = new Text($path);
         $path = $path->replace("\\", "/")->split("/");
       }
 
@@ -55,7 +55,7 @@
     }
 
     private function readArgs($request){
-      $args = new Object();
+      $args = new ProtoObject();
       parse_str(file_get_contents("php://input"),$inputData);
 
       foreach($this->argsIndexes as $key => $i){
@@ -75,7 +75,7 @@
 
       return $args;
     }
-    private function injectSessionArgs(Object $args){
+    private function injectSessionArgs(ProtoObject $args){
       if(session_status() == PHP_SESSION_ACTIVE)
         foreach($_SESSION as $key => $value){
           $args->{$key} = $value;

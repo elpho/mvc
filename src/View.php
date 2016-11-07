@@ -1,7 +1,7 @@
 <?php
   namespace elpho\mvc;
 
-  use elpho\lang\String;
+  use elpho\lang\Text;
   use elpho\lang\Dynamic;
   use elpho\mvc\helpers;
 
@@ -12,7 +12,7 @@
     public static function addHelper($name){
       $helperClass = self::findHelperClass($name);
       if(!class_exists($helperClass))
-        throw new \Exception(String::format(
+        throw new \Exception(Text::format(
           "Helper \"%s\" could not be initialized. Missing \"%s\" class.",
           $name,
           $helperClass));
@@ -21,7 +21,7 @@
     }
 
     private static function findHelperClass($name){
-      $name = new String($name);
+      $name = new Text($name);
       $parts = $name->split('\\');
       $last = $parts->length()-1;
       $parts[$last] = $parts[$last]->capitalize();
