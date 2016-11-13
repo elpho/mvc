@@ -54,7 +54,7 @@
       $this->di = $di;
     }
 
-    private function readArgs($request){
+    public function parseArgs($request){
       $args = new ProtoObject();
       parse_str(file_get_contents("php://input"),$inputData);
 
@@ -165,7 +165,7 @@
         if(!is_callable($this->callback))
           throw new UnregisteredRouteException();
 
-        $args = $this->readArgs($request);
+        $args = $this->parseArgs($request);
         $signal = true;
 
         if(is_callable(array($this->callback[0], "_beforeFilter")))

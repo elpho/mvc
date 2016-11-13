@@ -14,6 +14,8 @@
 
     private $routes = array();
 
+    private $currentRoute = null;
+
     public static function getInstance($index=null, $default=array("elpho\mvc\ErrorController", "e404")){
       if(self::$instance == null){
         if($index == null)
@@ -25,6 +27,7 @@
     }
 
     public static function setDependencyInjector(DependencyInjector $di){
+      $di->registerProvider('elpho\mvc\RouterProvider');
       self::$di = $di;
     }
 
@@ -168,6 +171,13 @@
       $request = $requestUri->split("?")->get(0)->split("/")->filter();
       return $request;
     }
+    public function getCurrentRoute(){
+      return $this->currentRoute;
+    }
+    public function getCurrentPath(){
+      return $this->currentRoute->getStringPath($this->currentRoute->parseArgs($this->getRequest()));
+    }
+
     public function findRoute($request=null, $method=null){
       if($request === null or $request == array())
         $request = $this->getRequest();
@@ -208,6 +218,9 @@
 
     public function serve() {
       $route = $this->findRoute();
+
+      $this->currentRoute = $route;
+
       $request = $this->getRequest();
       $route->go($request);
     }

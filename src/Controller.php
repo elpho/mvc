@@ -2,11 +2,12 @@
   namespace elpho\mvc;
 
   abstract class Controller{
-    protected static function redirect($url){
+    protected static function redirect($url, $status=303){
       if(is_object($url) and is_a($url,"Route"))
         $url = $url->getPath();
 
       $route = Router::route($url);
+      header("HTTP/1.1 ".$status." Redirecting");
       header("Location: ".$route);
     }
 
